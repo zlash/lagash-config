@@ -12,22 +12,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zlash/lagash-async.git"
+    "url": "git+https://github.com/zlash/lagash-config.git"
   },
   "keywords": [
     "typescript",
     "ts",
-    "async",
-    "promise",
+    "nconf",
+    "config",
     "wrapper",
     "lagash"
   ],
   "author": "Miguel Ángel Pérez Martínez",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zlash/lagash-async/issues"
+    "url": "https://github.com/zlash/lagash-config/issues"
   },
-  "homepage": "https://github.com/zlash/lagash-async#readme",
+  "homepage": "https://github.com/zlash/lagash-config#readme",
   "dependencies": {
     "@types/nconf": "0.0.30",
     "@types/node": "^6.0.37",
