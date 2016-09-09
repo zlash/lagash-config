@@ -36,12 +36,16 @@ class Config {
                     process.env[envLine.slice(0, eqPos)] = envLine.slice(eqPos + 1);
                 }
             }
+            return true;
         }
-        catch (err) { }
+        catch (err) {
+            return false;
+        }
     }
     static initConfig() {
-        Config.tryLoadEnvFromFile("./config.env");
-        Config.tryLoadEnvFromFile("../config.env");
+        if (!Config.tryLoadEnvFromFile("./config.env")) {
+            Config.tryLoadEnvFromFile("../config.env");
+        }
         Config.config = NConf.argv()
             .env()
             .file("default", "./config.json");

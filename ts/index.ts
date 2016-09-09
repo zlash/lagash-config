@@ -33,7 +33,7 @@ export default class Config {
 
     private static config: NConf.Provider;
 
-    static tryLoadEnvFromFile(filename: string): void {
+    static tryLoadEnvFromFile(filename: string): boolean {
         try {
             let envLines = FileSystem.readFileSync(filename, "ascii").replace(/(\r\n|\n|\r)/g, "\n").split("\n");
 
@@ -43,13 +43,18 @@ export default class Config {
                     process.env[envLine.slice(0, eqPos)] = envLine.slice(eqPos + 1);
                 }
             }
-        } catch (err) { }
+            return true;
+        } catch (err) {
+            return false;
+        }
     }
 
     static initConfig(): void {
 
-        Config.tryLoadEnvFromFile("./config.env");
-        Config.tryLoadEnvFromFile("../config.env");
+        if (!Config.tryLoadEnvFromFile("./config.env")) {
+            Config.tryLoadEnvFromFile("../config.env");
+        }
+
 
         Config.config = NConf.argv()
             .env()
