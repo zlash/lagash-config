@@ -42,11 +42,18 @@ class Config {
             return false;
         }
     }
-    static initConfig() {
-        if (!Config.tryLoadEnvFromFile("./config.env")) {
-            Config.tryLoadEnvFromFile("../config.env");
+    static tryLoadEnvAtRootOrParent(filename) {
+        if (!this.tryLoadEnvFromFile(`./${filename}`)) {
+            this.tryLoadEnvFromFile(`../${filename}`);
         }
-        Config.config = NConf.argv()
+    }
+    static initConfig() {
+        this.tryLoadEnvAtRootOrParent("config.env");
+        this.tryLoadEnvAtRootOrParent("config.local.env");
+        this.tryLoadEnvAtRootOrParent("config.test.env");
+        this.tryLoadEnvAtRootOrParent("config.latest.env");
+        this.tryLoadEnvAtRootOrParent("config.stable.env");
+        this.config = NConf.argv()
             .env()
             .file("default", "./config.json");
     }

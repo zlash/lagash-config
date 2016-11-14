@@ -49,14 +49,22 @@ export default class Config {
         }
     }
 
+    static tryLoadEnvAtRootOrParent(filename: string) {
+        if (!this.tryLoadEnvFromFile(`./${filename}`)) {
+            this.tryLoadEnvFromFile(`../${filename}`);
+        }
+    }
+
     static initConfig(): void {
 
-        if (!Config.tryLoadEnvFromFile("./config.env")) {
-            Config.tryLoadEnvFromFile("../config.env");
-        }
+        this.tryLoadEnvAtRootOrParent("config.env");
 
+        this.tryLoadEnvAtRootOrParent("config.local.env");
+        this.tryLoadEnvAtRootOrParent("config.test.env");
+        this.tryLoadEnvAtRootOrParent("config.latest.env");
+        this.tryLoadEnvAtRootOrParent("config.stable.env");   
 
-        Config.config = NConf.argv()
+        this.config = NConf.argv()
             .env()
             .file("default", "./config.json");
     }
